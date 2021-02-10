@@ -18,7 +18,7 @@ const mediaMatchModifiers = {
   `,
 }
 
-export default styled.div<MediaMatchProps>`
+const MediaMatch = styled.div<MediaMatchProps>`
   ${({ lessThan, greaterThan }) => css`
     display: none;
 
@@ -26,3 +26,5 @@ export default styled.div<MediaMatchProps>`
     ${!!greaterThan && mediaMatchModifiers.greaterThan(greaterThan)}
   `}
 `
+
+export default MediaMatch
