@@ -36,6 +36,19 @@ describe('<Gallery />', () => {
     expect(modalElement).toHaveStyle({ opacity: 1 })
   })
 
+  it('should open modal with selected image', async () => {
+    renderWithTheme(<Gallery items={itemsMock.slice(0, 2)} />)
+
+    // clicar no thumbnail
+    fireEvent.click(
+      screen.getByRole('button', { name: /Thumb - Gallery Image 2/i }),
+    )
+
+    // espero que a imagem da thumbnail seja aberta
+    const img = await screen.findByRole('img', { name: /Gallery Image 2/i })
+    expect(img.parentElement?.parentElement).toHaveClass('slick-active')
+  })
+
   it('should handle the close modal when overlay or button clicked', () => {
     renderWithTheme(<Gallery items={itemsMock.slice(0, 2)} />)
 
@@ -55,7 +68,7 @@ describe('<Gallery />', () => {
     expect(modalElement).toHaveStyle({ opacity: 0 })
   })
 
-  fit('should handle close modal when ESC button is press', () => {
+  it('should handle close modal when ESC button is press', () => {
     const { container } = renderWithTheme(
       <Gallery items={itemsMock.slice(0, 2)} />,
     )
