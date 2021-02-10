@@ -7,16 +7,22 @@ import * as S from './styles'
 
 type Platform = 'windows' | 'linux' | 'mac'
 
+type Rating = 'FREE' | 'pegi3' | 'pegi7' | 'pegi12' | 'pegi16' | 'pegi18'
+
 export type GameDetailsProps = {
   developer: string
   platforms: Platform[]
   releaseDate: string
+  rating: Rating
+  genres: string[]
 }
 
 const GameDetails = function ({
   developer,
   platforms,
   releaseDate,
+  rating,
+  genres,
 }: GameDetailsProps) {
   const platformIcons = {
     windows: <Windows title="Windows" size={18} />,
@@ -65,12 +71,14 @@ const GameDetails = function ({
 
         <S.Block>
           <S.Label>Rating</S.Label>
-          <S.Description>18+</S.Description>
+          <S.Description>
+            {rating === 'FREE' ? 'FREE' : `${rating.replace('pegi', '')}+`}
+          </S.Description>
         </S.Block>
 
         <S.Block>
           <S.Label>Genres</S.Label>
-          <S.Description>Action / Adventure</S.Description>
+          <S.Description>{genres.join(' / ')}</S.Description>
         </S.Block>
       </S.Content>
     </S.Wrapper>
