@@ -10,6 +10,7 @@ export default function SignIn(props: WishlistTemplateProps) {
 export async function getStaticProps() {
   return {
     props: {
+      games: gemesMock,
       recommendedGames: gemesMock.slice(0, 5),
       recommendedHighlight: highlightMock,
     },
