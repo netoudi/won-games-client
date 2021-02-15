@@ -6,11 +6,26 @@ import PaymentOptions, { PaymentOptionsProps } from '.'
 export default {
   title: 'PaymentOptions',
   component: PaymentOptions,
+  parameters: {
+    backgrounds: {
+      default: 'won-dark',
+    },
+  },
   args: {
     cards: cardsMock,
+  },
+  argTypes: {
+    cards: {
+      type: '',
+    },
+    handlePayment: {
+      action: 'clicked',
+    },
   },
 } as Meta
 
 export const Default: Story<PaymentOptionsProps> = (args) => (
-  <PaymentOptions {...args} />
+  <div style={{ padding: 16, maxWidth: 400 }}>
+    <PaymentOptions {...args} />
+  </div>
 )
