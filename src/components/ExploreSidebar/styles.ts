@@ -63,6 +63,7 @@ export const Wrapper = styled.div<WrapperProps>`
     overflow: hidden;
 
     ${Overlay} {
+      z-index: ${theme.layers.overlay};
       transition: opacity 0.3s ease-in-out;
       opacity: ${isOpen ? 1 : 0};
       pointer-events: ${isOpen ? 'all' : 'none'};
@@ -86,6 +87,8 @@ export const Wrapper = styled.div<WrapperProps>`
 
     ${Content} {
       ${media.lessThan('medium')`
+        z-index: ${theme.layers.overlay};
+
         opacity: ${isOpen ? 1 : 0};
         pointer-events: ${isOpen ? 'all' : 'none'};
         transform: ${isOpen ? 'translateY(0)' : 'translateY(3rem)'};
@@ -123,6 +126,8 @@ export const Wrapper = styled.div<WrapperProps>`
 
     ${Footer} {
       ${media.lessThan('medium')`
+        z-index: ${theme.layers.overlay};
+
         position: fixed;
         right: 0;
         bottom: 0;
