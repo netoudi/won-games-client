@@ -1,63 +1,108 @@
+import { useState } from 'react'
+import { FilterList as FilterIcon } from '@styled-icons/material-outlined/FilterList'
+import { Close as CloseIcon } from '@styled-icons/material-outlined/Close'
 import Heading from 'components/Heading'
 import Checkbox from 'components/Checkbox'
 import Radio from 'components/Radio'
 import Button from 'components/Button'
+import MediaMatch from 'components/MediaMatch'
 
 import * as S from './styles'
 
-const ExploreSidebar = () => {
+type Field = {
+  label: string
+  name: string
+}
+
+type Values = {
+  [field: string]: boolean | string
+}
+
+export type ItemProps = {
+  title: string
+  name: string
+  type: 'checkbox' | 'radio'
+  fields: Field[]
+}
+
+export type ExploreSidebarProps = {
+  items: ItemProps[]
+  initialValues?: Values
+  onFilter: (values: Values) => void
+}
+
+const ExploreSidebar = ({
+  items,
+  initialValues = {},
+  onFilter,
+}: ExploreSidebarProps) => {
+  const [values, setValues] = useState(initialValues)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleChange = (name: string, value: string | boolean) => {
+    setValues((s) => ({ ...s, [name]: value }))
+  }
+
+  const handleFilter = () => {
+    setIsOpen(false)
+    onFilter(values)
+  }
+
   return (
-    <S.Wrapper>
-      <Heading lineBottom lineColor="secondary" size="small">
-        Price
-      </Heading>
-      <Checkbox name="under-50" label="Under $50" labelFor="under-50" />
-      <Checkbox name="under-100" label="Under $100" labelFor="under-100" />
-      <Checkbox name="under-150" label="Under $150" labelFor="under-150" />
-      <Checkbox name="under-200" label="Under $200" labelFor="under-200" />
-      <Checkbox name="free" label="Free" labelFor="free" />
-      <Checkbox name="discounted" label="Discounted" labelFor="discounted" />
+    <S.Wrapper isOpen={isOpen}>
+      <MediaMatch lessThan="medium">
+        <S.Overlay aria-hidden={isOpen} />
 
-      <Heading lineBottom lineColor="secondary" size="small">
-        Sort by
-      </Heading>
-      <Radio
-        id="high-to-low"
-        name="short-by"
-        label="High to low"
-        labelFor="high-to-low"
-        value="high-to-low"
-      />
-      <Radio
-        id="low-to-high"
-        name="short-by"
-        label="Low to high"
-        labelFor="low-to-high"
-        value="low-to-high"
-      />
+        <S.FilterOpen onClick={() => setIsOpen(true)}>
+          <FilterIcon aria-label="open filters" />
+        </S.FilterOpen>
+      </MediaMatch>
 
-      <Heading lineBottom lineColor="secondary" size="small">
-        System
-      </Heading>
-      <Checkbox name="windows" label="Windows" labelFor="windows" />
-      <Checkbox name="linux" label="Linux" labelFor="linux" />
-      <Checkbox name="mac" label="Mac" labelFor="mac" />
+      <S.Content>
+        <S.FilterClose onClick={() => setIsOpen(false)}>
+          <CloseIcon aria-label="close filters" />
+        </S.FilterClose>
 
-      <Heading lineBottom lineColor="secondary" size="small">
-        Genre
-      </Heading>
-      <Checkbox name="action" label="Action" labelFor="action" />
-      <Checkbox name="adventure" label="Adventure" labelFor="adventure" />
-      <Checkbox name="fps" label="FPS" labelFor="fps" />
-      <Checkbox name="mmorpg" label="MMORPG" labelFor="mmorpg" />
-      <Checkbox name="rpg" label="RPG" labelFor="rpg" />
-      <Checkbox name="indie" label="Indie" labelFor="indie" />
-      <Checkbox name="shooters" label="Shooters" labelFor="shooters" />
-      <Checkbox name="simulation" label="Simulation" labelFor="simulation" />
+        {items.map((item) => (
+          <div key={item.name}>
+            <Heading lineBottom lineColor="secondary" size="small">
+              {item.title}
+            </Heading>
 
-      <Button fullWidth size="medium">
-        Filter
-      </Button>
+            {item.type === 'checkbox' &&
+              item.fields.map((field) => (
+                <Checkbox
+                  key={field.name}
+                  name={field.name}
+                  label={field.label}
+                  labelFor={field.name}
+                  isChecked={!!values[field.name]}
+                  onCheck={(v) => handleChange(field.name, v)}
+                />
+              ))}
+
+            {item.type === 'radio' &&
+              item.fields.map((field) => (
+                <Radio
+                  key={field.name}
+                  id={field.name}
+                  name={item.name}
+                  label={field.label}
+                  labelFor={field.name}
+                  value={field.name}
+                  defaultChecked={field.name === values[item.name]}
+                  onChange={() => handleChange(item.name, field.name)}
+                />
+              ))}
+          </div>
+        ))}
+      </S.Content>
+
+      <S.Footer>
+        <Button fullWidth size="medium" onClick={handleFilter}>
+          Filter
+        </Button>
+      </S.Footer>
     </S.Wrapper>
   )
 }
