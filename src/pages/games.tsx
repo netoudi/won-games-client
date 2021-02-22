@@ -1,23 +1,27 @@
-import { ApolloClient, gql, InMemoryCache } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 import Games, { GamesTemplateProps } from 'templates/Games'
 import filterItemsMock from 'components/ExploreSidebar/mock'
 import gamesMock from 'components/GameCardSlider/mock'
 
 export default function GamesPage(props: GamesTemplateProps) {
-  const client = new ApolloClient({
-    uri: 'http://localhost:1337/graphql',
-    cache: new InMemoryCache(),
-  })
-
-  client.query({
-    query: gql`
-      query GetGames {
-        games {
-          name
-        }
+  const { data, loading, error } = useQuery(gql`
+    query GetGames {
+      games {
+        name
       }
-    `,
-  })
+    }
+  `)
+
+  if (loading) return <p style={{ color: '#FAFAFA' }}>Loading...</p>
+
+  if (error) return <p style={{ color: '#FAFAFA' }}>{error}</p>
+
+  if (data)
+    return (
+      <pre style={{ padding: 20, backgroundColor: '#FAFAFA', fontSize: 16 }}>
+        {JSON.stringify(data, null, 2)}
+      </pre>
+    )
 
   return <Games {...props} />
 }
