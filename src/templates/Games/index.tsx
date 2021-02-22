@@ -7,6 +7,7 @@ import GameCard, { GameCardProps } from 'components/GameCard'
 import * as S from './styles'
 
 export type GamesTemplateProps = {
+  data: any
   filterItems: ItemProps[]
   games?: GameCardProps[]
 }
