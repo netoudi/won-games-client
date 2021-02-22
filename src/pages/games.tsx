@@ -1,39 +1,48 @@
 import { gql } from '@apollo/client'
 import Games, { GamesTemplateProps } from 'templates/Games'
 import filterItemsMock from 'components/ExploreSidebar/mock'
-import gamesMock from 'components/GameCardSlider/mock'
 import { initializeApollo } from 'utils/apollo'
 
-const GET_GAMES = gql`
-  query GetGames {
-    games {
-      name
-    }
-  }
-`
-
 export default function GamesPage(props: GamesTemplateProps) {
-  if (props.data)
-    return (
-      <pre style={{ padding: 20, backgroundColor: '#FAFAFA', fontSize: 16 }}>
-        {JSON.stringify(props.data, null, 2)}
-      </pre>
-    )
-
   return <Games {...props} />
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const apolloClient = initializeApollo()
 
-  const { data } = await apolloClient.query({ query: GET_GAMES })
+  const { data } = await apolloClient.query({
+    query: gql`
+      query QueryGames {
+        games {
+          name
+          slug
+          cover {
+            url
+          }
+          developers {
+            name
+          }
+          price
+        }
+      }
+    `,
+  })
+
+  console.log(data)
 
   return {
     props: {
-      data: data,
-      initialApolloState: apolloClient.cache.extract(),
+      revalidate: 60,
       filterItems: filterItemsMock,
-      games: gamesMock,
+      games: data.games.map((game: any) => ({
+        title: game.name,
+        developer: game.developers[0].name,
+        img: game.cover ? `http://localhost:1337${game.cover.url}` : null,
+        price: new Intl.NumberFormat('en', {
+          style: 'currency',
+          currency: 'USD',
+        }).format(game.price),
+      })),
     },
   }
 }
