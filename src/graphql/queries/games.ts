@@ -26,7 +26,7 @@ export const QUERY_GAME_BY_SLUG = gql`
       rating
       release_date
       gallery {
-        url
+        src: url
         label: alternativeText
       }
       cover {

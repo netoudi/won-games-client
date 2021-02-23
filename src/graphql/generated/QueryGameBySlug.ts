@@ -11,7 +11,7 @@ import { ENUM_GAME_RATING } from "./globalTypes";
 
 export interface QueryGameBySlug_games_gallery {
   __typename: "UploadFile";
-  url: string;
+  src: string;
   label: string | null;
 }
 
