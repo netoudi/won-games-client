@@ -7,12 +7,13 @@ import highlightMock from 'components/Highlight/mock'
 import itemsMock from 'components/CartList/mock'
 import cardsMock from 'components/PaymentOptions/mock'
 
-import Cart from '.'
+import Cart, { CartTemplateProps } from '.'
 
-const props = {
+const props: CartTemplateProps = {
   items: itemsMock,
   total: '$ 430,00',
   cards: cardsMock,
+  recommendedTitle: 'You may like these games',
   recommendedHighlight: highlightMock,
   recommendedGames: gamesMock,
 }
