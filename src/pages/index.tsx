@@ -1,6 +1,6 @@
 import Home, { HomeTemplateProps } from 'templates/Home'
 import { initializeApollo } from 'utils/apollo'
-import { QueryHome } from 'graphql/generated/QueryHome'
+import { QueryHome, QueryHomeVariables } from 'graphql/generated/QueryHome'
 import { QUERY_HOME } from 'graphql/queries/home'
 import { bannersMapper, gamesMapper, highlightMapper } from 'utils/mappers'
 
@@ -11,7 +11,12 @@ export default function Index(props: HomeTemplateProps) {
 export async function getStaticProps() {
   const apolloClient = initializeApollo()
 
-  const { data } = await apolloClient.query<QueryHome>({ query: QUERY_HOME })
+  const TODAY = new Date().toISOString().slice(0, 10) // 2021-01-27
+
+  const { data } = await apolloClient.query<QueryHome, QueryHomeVariables>({
+    query: QUERY_HOME,
+    variables: { date: TODAY },
+  })
 
   return {
     props: {
