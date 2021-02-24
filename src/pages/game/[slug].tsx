@@ -4,9 +4,6 @@ import Game, { GameTemplateProps } from 'templates/Game'
 import { QUERY_GAME_BY_SLUG, QUERY_GAMES } from 'graphql/queries/games'
 import { QueryGames, QueryGamesVariables } from 'graphql/generated/QueryGames'
 
-import gemesMock from 'components/GameCardSlider/mock'
-import highlightMock from 'components/Highlight/mock'
-
 import { initializeApollo } from 'utils/apollo'
 import { GetStaticProps } from 'next'
 import {
@@ -15,7 +12,12 @@ import {
 } from 'graphql/generated/QueryGameBySlug'
 import { QueryRecommended } from 'graphql/generated/QueryRecommended'
 import { QUERY_RECOMMENDED } from 'graphql/queries/recommended'
-import { gamesMapper } from 'utils/mappers'
+import { gamesMapper, highlightMapper } from 'utils/mappers'
+import {
+  QueryUpcoming,
+  QueryUpcomingVariables,
+} from 'graphql/generated/QueryUpcoming'
+import { QUERY_UPCOMING } from 'graphql/queries/upcoming'
 
 const apolloClient = initializeApollo()
 
@@ -67,6 +69,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     query: QUERY_RECOMMENDED,
   })
 
+  // get upcoming games and highlight
+  const TODAY = new Date().toISOString().slice(0, 10) // 2021-01-27
+
+  const { data: upcoming } = await apolloClient.query<
+    QueryUpcoming,
+    QueryUpcomingVariables
+  >({
+    query: QUERY_UPCOMING,
+    variables: { date: TODAY },
+  })
+
   return {
     props: {
       revalidate: 60, // gera novamente a página a cada 60's, evita consultar a api a cada requisição
@@ -89,8 +102,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         rating: game.rating,
         genres: game.platforms.map((category) => category.name),
       },
-      upcomingGames: gemesMock,
-      upcomingHighlight: highlightMock,
+      upcomingTitle: upcoming.showcase?.upcomingGames?.title,
+      upcomingHighlight: highlightMapper(
+        upcoming.showcase?.upcomingGames?.highlight,
+      ),
+      upcomingGames: gamesMapper(upcoming.upcomingGames),
       recommendedTitle: recommended?.section?.title,
       recommendedGames: gamesMapper(recommended?.section?.games),
     },
