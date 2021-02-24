@@ -53,6 +53,13 @@ export const QUERY_HOME = gql`
           ...HighlightFragment
         }
       }
+
+      freeGames {
+        title
+        highlight {
+          ...HighlightFragment
+        }
+      }
     }
   }
 

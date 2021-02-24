@@ -194,11 +194,39 @@ export interface QueryHome_sections_upcomingGames {
   highlight: QueryHome_sections_upcomingGames_highlight | null;
 }
 
+export interface QueryHome_sections_freeGames_highlight_background {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface QueryHome_sections_freeGames_highlight_floatImage {
+  __typename: "UploadFile";
+  url: string;
+}
+
+export interface QueryHome_sections_freeGames_highlight {
+  __typename: "ComponentPageHighlight";
+  title: string;
+  subtitle: string;
+  background: QueryHome_sections_freeGames_highlight_background | null;
+  floatImage: QueryHome_sections_freeGames_highlight_floatImage | null;
+  buttonLabel: string;
+  buttonLink: string;
+  alignment: ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT | null;
+}
+
+export interface QueryHome_sections_freeGames {
+  __typename: "ComponentPageSection";
+  title: string | null;
+  highlight: QueryHome_sections_freeGames_highlight | null;
+}
+
 export interface QueryHome_sections {
   __typename: "Home";
   newGames: QueryHome_sections_newGames | null;
   popularGames: QueryHome_sections_popularGames | null;
   upcomingGames: QueryHome_sections_upcomingGames | null;
+  freeGames: QueryHome_sections_freeGames | null;
 }
 
 export interface QueryHome {
