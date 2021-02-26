@@ -24,8 +24,8 @@ export default [
     ],
   },
   {
-    title: 'System',
-    name: 'system',
+    title: 'Platforms',
+    name: 'platforms',
     type: 'checkbox',
     fields: [
       { name: 'windows', label: 'Windows' },
