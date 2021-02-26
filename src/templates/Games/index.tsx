@@ -31,7 +31,7 @@ const Games = ({ filterItems }: GamesTemplateProps) => {
 
   const { games, gamesConnection } = data
 
-  const hasMoreGames = games.length < (gamesConnection.values.length || 0)
+  const hasMoreGames = games.length < (gamesConnection?.values?.length || 0)
 
   const handleFilter = (items: ParsedUrlQueryInput) => {
     push({
