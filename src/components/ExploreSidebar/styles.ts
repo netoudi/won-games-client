@@ -51,6 +51,10 @@ export const Content = styled.div`
 export const Footer = styled.div`
   ${({ theme }) => css`
     margin-top: ${theme.spacings.medium};
+
+    ${media.greaterThan('medium')`
+      display: none;
+    `}
   `}
 `
 

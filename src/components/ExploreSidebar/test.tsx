@@ -71,7 +71,8 @@ describe('<ExploreSidebar />', () => {
     userEvent.click(screen.getByRole('checkbox', { name: /linux/i }))
     userEvent.click(screen.getByRole('radio', { name: /low to high/i }))
 
-    userEvent.click(screen.getByRole('button', { name: /filter/i }))
+    // 1st render (initialValues) + 3 clicks
+    expect(onFilter).toHaveBeenCalledTimes(4)
 
     expect(onFilter).toBeCalledWith({
       platforms: ['windows', 'linux'],
@@ -86,8 +87,6 @@ describe('<ExploreSidebar />', () => {
 
     userEvent.click(screen.getByRole('radio', { name: /high to low/i }))
     userEvent.click(screen.getByRole('radio', { name: /low to high/i }))
-
-    userEvent.click(screen.getByRole('button', { name: /filter/i }))
 
     expect(onFilter).toBeCalledWith({ sort_by: 'low-to-high' })
   })

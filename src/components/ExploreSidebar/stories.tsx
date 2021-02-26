@@ -12,6 +12,7 @@ export default {
   },
   args: {
     items: itemsMock,
+    onFilter: () => console.log('filter'),
   },
 } as Meta
 
