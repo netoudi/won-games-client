@@ -13,29 +13,23 @@ const useRouter = jest.spyOn(require('next/router'), 'useRouter')
 const push = jest.fn()
 
 useRouter.mockImplementation(() => ({
-  basePath: '/',
-  pathname: '/',
-  route: '/',
-  query: {},
-  asPath: '/',
   push,
-  replace: jest.fn(() => Promise.resolve(true)),
-  reload: jest.fn(() => Promise.resolve(true)),
-  prefetch: jest.fn(() => Promise.resolve()),
-  back: jest.fn(() => Promise.resolve(true)),
-  beforePopState: jest.fn(() => Promise.resolve(true)),
-  isFallback: false,
-  events: {
-    on: jest.fn(),
-    off: jest.fn(),
-    emit: jest.fn(),
-  },
+  query: '',
+  asPath: '',
+  route: '/',
 }))
 
 jest.mock('templates/Base', () => ({
   __esModule: true,
   default: function Mock({ children }: { children: React.ReactNode }) {
     return <div data-testid="Mock Base">{children}</div>
+  },
+}))
+
+jest.mock('next/link', () => ({
+  __esModule: true,
+  default: function Mock({ children }: { children: React.ReactNode }) {
+    return <div>{children}</div>
   },
 }))
 
