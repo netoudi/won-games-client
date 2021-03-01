@@ -54,6 +54,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   >({
     query: QUERY_GAME_BY_SLUG,
     variables: { slug: `${params?.slug}` },
+    fetchPolicy: 'no-cache',
   })
 
   if (!data.games.length) {
@@ -81,8 +82,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   })
 
   return {
+    revalidate: 60, // gera novamente a página a cada 60's, evita consultar a api a cada requisição
     props: {
-      revalidate: 60, // gera novamente a página a cada 60's, evita consultar a api a cada requisição
       cover: `http://localhost:1337${game.cover?.src}`,
       gameInfo: {
         title: game.name,
