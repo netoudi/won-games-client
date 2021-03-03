@@ -5,6 +5,7 @@ import {
 } from 'graphql/generated/QueryHome'
 import {
   bannersMapper,
+  cartMapper,
   gamesMapper,
   highlightMapper,
 } from 'utils/mappers/index'
@@ -111,5 +112,31 @@ describe('highlightMapper()', () => {
       buttonLink: 'button link',
       alignment: 'left',
     })
+  })
+})
+
+describe('cartMapper()', () => {
+  it('should return empty array if no games', () => {
+    expect(cartMapper(null)).toStrictEqual([])
+  })
+
+  it('should return mapped items', () => {
+    const game = {
+      id: '1',
+      name: 'game',
+      cover: {
+        url: '/image.jpg',
+      },
+      price: 10,
+    } as QueryGames_games
+
+    expect(cartMapper([game])).toStrictEqual([
+      {
+        id: '1',
+        img: 'http://localhost:1337/image.jpg',
+        price: '$10.00',
+        title: 'game',
+      },
+    ])
   })
 })
