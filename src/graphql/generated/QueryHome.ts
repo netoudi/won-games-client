@@ -3,7 +3,11 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ENUM_COMPONENTPAGERIBBON_COLOR, ENUM_COMPONENTPAGERIBBON_SIZE, ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT } from "./globalTypes";
+import {
+  ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT,
+  ENUM_COMPONENTPAGERIBBON_COLOR,
+  ENUM_COMPONENTPAGERIBBON_SIZE
+} from './globalTypes'
 
 // ====================================================
 // GraphQL query operation: QueryHome

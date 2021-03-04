@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import { GameDetailsProps } from 'components/GameDetails'
 import galleryMock from 'components/Gallery/mock'
@@ -79,7 +78,7 @@ jest.mock('components/Showcase', () => {
 
 describe('<Game />', () => {
   it('should render the template with component', () => {
-    renderWithTheme(<Game {...props} />)
+    render(<Game {...props} />)
 
     expect(screen.getByTestId('Mock GameInfo')).toBeInTheDocument()
     expect(screen.getByTestId('Mock Gallery')).toBeInTheDocument()
@@ -89,13 +88,13 @@ describe('<Game />', () => {
   })
 
   it('should not render the gallery if no images', function () {
-    renderWithTheme(<Game {...props} gallery={undefined} />)
+    render(<Game {...props} gallery={undefined} />)
 
     expect(screen.queryByTestId('Mock Gallery')).not.toBeInTheDocument()
   })
 
   it('should not render the gallery on mobile', function () {
-    renderWithTheme(<Game {...props} />)
+    render(<Game {...props} />)
 
     expect(screen.getByTestId('Mock Gallery').parentElement).toHaveStyle({
       display: 'none',
@@ -111,7 +110,7 @@ describe('<Game />', () => {
   })
 
   it('should render the cover image', function () {
-    renderWithTheme(<Game {...props} />)
+    render(<Game {...props} />)
 
     const cover = screen.getByRole('image', { name: /cover/i })
 

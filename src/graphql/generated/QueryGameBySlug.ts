@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ENUM_GAME_RATING } from "./globalTypes";
+import { ENUM_GAME_RATING } from './globalTypes'
 
 // ====================================================
 // GraphQL query operation: QueryGameBySlug

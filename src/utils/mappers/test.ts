@@ -1,6 +1,5 @@
 import {
   QueryHome_banners,
-  QueryHome_sections_freeGames_highlight,
   QueryHome_sections_newGames_highlight,
 } from 'graphql/generated/QueryHome'
 import {

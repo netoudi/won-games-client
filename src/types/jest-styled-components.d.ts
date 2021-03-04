@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Plugin, NewPlugin } from 'pretty-format'
+import { NewPlugin, Plugin } from 'pretty-format'
 
 declare global {
   namespace jest {
