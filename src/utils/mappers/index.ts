@@ -9,13 +9,14 @@ import {
   QueryHome_upcomingGames,
 } from 'graphql/generated/QueryHome'
 import formatPrice from 'utils/format-price'
+import getImageUrl from 'utils/getImageUrl'
 
 export const bannersMapper = (
   banners: QueryHome_banners[] | undefined | null,
 ) => {
   return banners
     ? banners.map((banner) => ({
-        img: `http://localhost:1337${banner.image?.url}`,
+        img: getImageUrl(banner.image?.url),
         title: banner.title,
         subtitle: banner.subtitle,
         buttonLabel: banner.button?.label,
@@ -41,7 +42,7 @@ export const gamesMapper = (games: gamesProps[] | undefined | null) => {
         title: game.name,
         slug: game.slug,
         developer: game.developers[0].name,
-        img: `http://localhost:1337${game.cover?.url}`,
+        img: getImageUrl(game.cover?.url),
         price: game.price,
       }))
     : []
@@ -60,8 +61,8 @@ export const highlightMapper = (highlight: highlightMapperProps) => {
     ? {
         title: highlight.title,
         subtitle: highlight.subtitle,
-        backgroundImage: `http://localhost:1337${highlight.background?.url}`,
-        floatImage: `http://localhost:1337${highlight.floatImage?.url}`,
+        backgroundImage: getImageUrl(highlight.background?.url),
+        floatImage: getImageUrl(highlight.floatImage?.url),
         buttonLabel: highlight.buttonLabel,
         buttonLink: highlight.buttonLink,
         alignment: highlight.alignment,
@@ -73,7 +74,7 @@ export const cartMapper = (games: QueryHome_newGames[] | undefined | null) => {
   return games
     ? games.map((game) => ({
         id: game.id,
-        img: `http://localhost:1337${game.cover?.url}`,
+        img: getImageUrl(game.cover?.url),
         price: formatPrice(game.price),
         title: game.name,
       }))

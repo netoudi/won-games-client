@@ -8,6 +8,7 @@ import GameCard from 'components/GameCard'
 import Empty from 'components/Empty'
 import { useQueryGames } from 'graphql/queries/games'
 import { parseQueryStringToFilter, parseQueryStringToWhere } from 'utils/filter'
+import getImageUrl from 'utils/getImageUrl'
 
 import * as S from './styles'
 
@@ -68,7 +69,7 @@ const Games = ({ filterItems }: GamesTemplateProps) => {
                     title={game.name}
                     slug={game.slug}
                     developer={game.developers[0].name}
-                    img={`http://localhost:1337${game.cover?.url}`}
+                    img={getImageUrl(game.cover?.url)}
                     price={game.price}
                   />
                 ))}
