@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT } from './globalTypes'
+import { ENUM_COMPONENTPAGEHIGHLIGHT_ALIGNMENT } from "./globalTypes";
 
 // ====================================================
 // GraphQL fragment: HighlightFragment
