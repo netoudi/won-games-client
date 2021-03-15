@@ -151,7 +151,7 @@ exports[`<FormSignUp /> should render the form 1`] = `
             </div>
             <input
               class="c5"
-              name="name"
+              name="username"
               placeholder="Name"
               type="text"
               value=""
