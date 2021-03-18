@@ -11,7 +11,7 @@ import Button from 'components/Button'
 import * as S from './styles'
 
 const FormSignIn = () => {
-  const { push } = useRouter()
+  const { push, query } = useRouter()
   const [formError, setFormError] = useState('')
   const [fieldError, setFieldError] = useState<FieldError>({})
   const [values, setValues] = useState({ email: '', password: '' })
@@ -39,7 +39,7 @@ const FormSignIn = () => {
     const result = await signIn('credentials', {
       ...values,
       redirect: false,
-      callbackUrl: '/',
+      callbackUrl: `${window.location.origin}${query?.callbackUrl || ''}`,
     })
 
     if (result?.url) {
