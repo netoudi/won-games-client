@@ -13,12 +13,12 @@ const fieldsValidations = {
     .messages({ 'any.only': 'confirm password does not match with password' }),
 }
 
-export type FieldsErrors = {
+export type FieldError = {
   [key: string]: string
 }
 
 function getFieldsErrors(objError: Joi.ValidationResult) {
-  const errors: FieldsErrors = {}
+  const errors: FieldError = {}
 
   if (objError.error) {
     objError.error.details.forEach((err) => {
