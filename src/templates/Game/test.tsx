@@ -22,20 +22,11 @@ const props: GameTemplateProps = {
   recommendedGames: gemesMock,
 }
 
-jest.mock('components/Menu', () => {
+jest.mock('templates/Base', () => {
   return {
     __esModule: true,
-    default: function Mock() {
-      return <div data-testid="Mock Menu" />
-    },
-  }
-})
-
-jest.mock('components/Footer', () => {
-  return {
-    __esModule: true,
-    default: function Mock() {
-      return <div data-testid="Mock Footer" />
+    default: function Mock({ children }: { children: React.ReactNode }) {
+      return <div data-testid="Mock Base">{children}</div>
     },
   }
 })
