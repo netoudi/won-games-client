@@ -1,3 +1,6 @@
+import { GetServerSidePropsContext } from 'next'
+import protectedRoutes from 'utils/protected-routes'
+
 import Wishlist, { WishlistTemplateProps } from 'templates/Wishlist'
 
 import gemesMock from 'components/GameCardSlider/mock'
@@ -10,7 +13,9 @@ export default function SignIn(props: WishlistTemplateProps) {
   return <Wishlist {...props} />
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await protectedRoutes(context)
+
   const apolloClient = initializeApollo()
 
   const { data } = await apolloClient.query<QueryRecommended>({
@@ -19,6 +24,7 @@ export async function getStaticProps() {
 
   return {
     props: {
+      session,
       games: gemesMock,
       recommendedTitle: data.recommended?.section?.title,
       recommendedGames: gamesMapper(data.recommended?.section?.games),

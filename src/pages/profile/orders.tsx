@@ -1,3 +1,5 @@
+import { GetServerSidePropsContext } from 'next'
+import protectedRoutes from 'utils/protected-routes'
 import Profile from 'templates/Profile'
 import OrdersList, { OrdersListProps } from 'components/OrdersList'
 import itemsMock from 'components/OrdersList/mock'
@@ -10,9 +12,12 @@ export default function Orders({ items }: OrdersListProps) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const session = await protectedRoutes(context)
+
   return {
     props: {
+      session,
       items: itemsMock,
     },
   }
