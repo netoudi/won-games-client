@@ -16,10 +16,10 @@ import TextField from 'components/TextField'
 import Button from 'components/Button'
 
 const FormForgotPassword = () => {
-  const { push, query } = useRouter()
+  const { query } = useRouter()
   const [formError, setFormError] = useState('')
   const [fieldError, setFieldError] = useState<FieldError>({})
-  const [values, setValues] = useState({ email: '' })
+  const [values, setValues] = useState({ email: (query.email as string) || '' })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -85,6 +85,7 @@ const FormForgotPassword = () => {
               placeholder="Email"
               type="text"
               error={fieldError?.email}
+              initialValue={query.email as string}
               onInputChange={(v) => handleInput('email', v)}
               icon={<Email />}
             />
