@@ -35,7 +35,7 @@ describe('bannersMapper()', () => {
 
     expect(bannersMapper([banner])).toStrictEqual([
       {
-        img: 'http://localhost:1337/image.jpg',
+        img: '/image.jpg',
         title: 'Banner title',
         subtitle: 'Banner subtitle',
         buttonLabel: 'button label',
@@ -75,7 +75,7 @@ describe('gamesMapper()', () => {
         title: 'game',
         slug: 'game',
         developer: 'developer',
-        img: 'http://localhost:1337/image.jpg',
+        img: '/image.jpg',
         price: 10,
       },
     ])
@@ -105,8 +105,8 @@ describe('highlightMapper()', () => {
     expect(highlightMapper(highlight)).toStrictEqual({
       title: 'Highlight title',
       subtitle: 'Highlight subtitle',
-      backgroundImage: 'http://localhost:1337/background.jpg',
-      floatImage: 'http://localhost:1337/float-image.png',
+      backgroundImage: '/background.jpg',
+      floatImage: '/float-image.png',
       buttonLabel: 'button label',
       buttonLink: 'button link',
       alignment: 'left',
@@ -132,7 +132,7 @@ describe('cartMapper()', () => {
     expect(cartMapper([game])).toStrictEqual([
       {
         id: '1',
-        img: 'http://localhost:1337/image.jpg',
+        img: '/image.jpg',
         price: '$10.00',
         title: 'game',
       },
