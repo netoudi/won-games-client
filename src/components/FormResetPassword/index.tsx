@@ -8,7 +8,7 @@ import TextField from 'components/TextField'
 import Button from 'components/Button'
 
 const FormResetPassword = () => {
-  const { push, query } = useRouter()
+  const { query } = useRouter()
   const [formError, setFormError] = useState('')
   const [fieldError, setFieldError] = useState<FieldError>({})
   const [values, setValues] = useState({ password: '', password_confirm: '' })
@@ -33,19 +33,33 @@ const FormResetPassword = () => {
 
     setFieldError({})
 
-    const result = await signIn('credentials', {
-      ...values,
-      redirect: false,
-      callbackUrl: `${window.location.origin}${query?.callbackUrl || ''}`,
-    })
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          password: values.password,
+          passwordConfirmation: values.password_confirm,
+          code: query.code,
+        }),
+      },
+    )
 
-    if (result?.url) {
-      return push(result.url)
-    }
-
+    const data = await response.json()
     setLoading(false)
 
-    setFormError('username or password is invalid')
+    if (data.error) {
+      setFormError(data.message[0].messages[0].message)
+    } else {
+      await signIn('credentials', {
+        email: data.user.email,
+        password: values.password,
+        callbackUrl: '/',
+      })
+    }
   }
 
   return (
