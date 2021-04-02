@@ -1,3 +1,5 @@
+global.fetch = require('node-fetch')
+
 import { server } from 'utils/mockServer/server'
 
 beforeAll(() => {
