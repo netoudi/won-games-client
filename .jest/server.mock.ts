@@ -1,4 +1,4 @@
-import server from 'utils/mockServer/server'
+import { server } from 'utils/mockServer/server'
 
 beforeAll(() => {
   // ficar escutando todas as chamadas nos testes
