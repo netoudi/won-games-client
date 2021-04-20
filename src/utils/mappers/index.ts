@@ -8,6 +8,7 @@ import {
   QueryHome_sections_upcomingGames_highlight,
   QueryHome_upcomingGames,
 } from 'graphql/generated/QueryHome'
+import { QueryWishlist_wishlists_games } from 'graphql/generated/QueryWishlist'
 import formatPrice from 'utils/format-price'
 import getImageUrl from 'utils/getImageUrl'
 
@@ -34,6 +35,7 @@ type gamesProps =
   | QueryHome_newGames
   | QueryHome_upcomingGames
   | QueryHome_freeGames
+  | QueryWishlist_wishlists_games
 
 export const gamesMapper = (games: gamesProps[] | undefined | null) => {
   return games
