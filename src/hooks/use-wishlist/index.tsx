@@ -47,8 +47,11 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     setWishlistItems(data?.wishlists[0]?.games || [])
   }, [data])
 
-  const isInWishlist = () => false
+  const isInWishlist = (id: string) =>
+    !!wishlistItems.find((game) => game.id === id)
+
   const addToWishlist = () => null
+
   const removeFromWishlist = () => null
 
   return (
