@@ -2,7 +2,7 @@ import Base from 'templates/Base'
 import Showcase from 'components/Showcase'
 import Heading from 'components/Heading'
 import CartList, { CartListProps } from 'components/CartList'
-import PaymentOptions, { PaymentOptionsProps } from 'components/PaymentOptions'
+import PaymentForm from 'components/PaymentForm'
 import { GameCardProps } from 'components/GameCard'
 import { HighlightProps } from 'components/Highlight'
 import { Container } from 'components/Container'
@@ -14,17 +14,13 @@ export type CartTemplateProps = {
   recommendedTitle: string
   recommendedGames: GameCardProps[]
   recommendedHighlight: HighlightProps
-} & CartListProps &
-  Pick<PaymentOptionsProps, 'cards'>
+} & CartListProps
 
 const Cart = ({
   recommendedTitle,
   recommendedGames,
   recommendedHighlight,
-  cards,
 }: CartTemplateProps) => {
-  const handlePayment = () => null
-
   return (
     <Base>
       <Container>
@@ -35,7 +31,7 @@ const Cart = ({
         <S.Content>
           <CartList />
 
-          <PaymentOptions cards={cards} handlePayment={handlePayment} />
+          <PaymentForm />
         </S.Content>
 
         <Divider />
