@@ -67,17 +67,21 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
           Payment
         </Heading>
 
-        <CardElement
-          options={{
-            hidePostalCode: true,
-            style: {
-              base: {
-                fontSize: '16px',
+        {freeGames ? (
+          <S.FreeGames>Only free games, click buy and enjoy!</S.FreeGames>
+        ) : (
+          <CardElement
+            options={{
+              hidePostalCode: true,
+              style: {
+                base: {
+                  fontSize: '16px',
+                },
               },
-            },
-          }}
-          onChange={handleChange}
-        />
+            }}
+            onChange={handleChange}
+          />
+        )}
 
         {error && (
           <S.Error>
@@ -94,7 +98,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         <Button
           fullWidth
           icon={<ShoppingCart />}
-          disabled={disabled || !!error}
+          disabled={!freeGames && (disabled || !!error)}
         >
           Buy now
         </Button>
