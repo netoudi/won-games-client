@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { Done } from '@styled-icons/material-outlined/Done'
 import Base from 'templates/Base'
@@ -5,6 +6,7 @@ import { Container } from 'components/Container'
 import { GameCardProps } from 'components/GameCard'
 import Showcase from 'components/Showcase'
 import { HighlightProps } from 'components/Highlight'
+import { useCart } from 'hooks/use-cart'
 
 import * as S from './styles'
 
@@ -19,6 +21,12 @@ const Success = ({
   recommendedGames,
   recommendedHighlight,
 }: SuccessTemplateProps) => {
+  const { clearCart } = useCart()
+
+  useEffect(() => {
+    clearCart()
+  }, [clearCart])
+
   return (
     <Base>
       <Container>
