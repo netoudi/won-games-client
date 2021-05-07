@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { Session } from 'next-auth/client'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { PaymentIntent, StripeCardElementChangeEvent } from '@stripe/stripe-js'
@@ -46,7 +47,6 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         // faço o fluxo de jogo gratuito
         if (data.freeGames) {
           setFreeGames(true)
-          console.log({ freeGames: data.freeGames })
           return
         }
 
@@ -60,7 +60,6 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         // senão o paymentIntent foi válido
         // setClientSecret
         setClienteSecret(data.client_secret)
-        console.log({ clientSecret: data.client_secret })
       }
     }
 
@@ -109,8 +108,6 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
       // bater na API /orders
       saveOrder(payload.paymentIntent)
 
-      console.log(payload.paymentIntent)
-
       // redirecionar para página de sucesso
       router.push('/success')
     }
@@ -149,9 +146,11 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         </S.Body>
 
         <S.Footer>
-          <Button as="a" fullWidth minimal>
-            Continue shopping
-          </Button>
+          <Link href="/" passHref>
+            <Button as="a" fullWidth minimal>
+              Continue shopping
+            </Button>
+          </Link>
           <Button
             fullWidth
             icon={loading ? <FormLoading /> : <ShoppingCart />}
