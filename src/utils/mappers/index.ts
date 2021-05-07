@@ -9,6 +9,7 @@ import {
   QueryHome_upcomingGames,
 } from 'graphql/generated/QueryHome'
 import { QueryWishlist_wishlists_games } from 'graphql/generated/QueryWishlist'
+import { QueryOrders_orders } from 'graphql/generated/QueryOrders'
 import formatPrice from 'utils/format-price'
 import getImageUrl from 'utils/getImageUrl'
 
@@ -79,6 +80,35 @@ export const cartMapper = (games: QueryHome_newGames[] | undefined | null) => {
         img: getImageUrl(game.cover?.url),
         price: formatPrice(game.price),
         title: game.name,
+      }))
+    : []
+}
+
+export const ordersMapper = (
+  orders: QueryOrders_orders[] | undefined | null,
+) => {
+  return orders
+    ? orders.map((order) => ({
+        id: order.id,
+        paymentInfo: {
+          flag: order.card_brand,
+          img: order.card_brand ? `/img/cards/${order.card_brand}.png` : null,
+          number: order.card_last4
+            ? `**** **** **** ${order.card_last4}`
+            : 'Free Game',
+          purchaseDate: `Purchase made on ${new Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          }).format(new Date(order.created_at))}`,
+        },
+        games: order.games.map((game) => ({
+          id: game.id,
+          title: game.name,
+          downloadLink: 'https://wongames.com/game/download/xpto',
+          img: getImageUrl(game.cover?.url),
+          price: formatPrice(game.price),
+        })),
       }))
     : []
 }

@@ -7,8 +7,10 @@ import {
   cartMapper,
   gamesMapper,
   highlightMapper,
+  ordersMapper,
 } from 'utils/mappers/index'
 import { QueryGames_games } from 'graphql/generated/QueryGames'
+import { QueryOrders_orders } from 'graphql/generated/QueryOrders'
 
 describe('bannersMapper()', () => {
   it('should return an empty array if there are no banners', () => {
@@ -135,6 +137,110 @@ describe('cartMapper()', () => {
         img: '/image.jpg',
         price: '$10.00',
         title: 'game',
+      },
+    ])
+  })
+})
+
+describe('ordersMapper()', () => {
+  it('should return empty array if no orders', () => {
+    expect(cartMapper(null)).toStrictEqual([])
+  })
+
+  it('should return mapped items', () => {
+    const orders = [
+      {
+        __typename: 'Order',
+        id: '1',
+        card_brand: 'visa',
+        card_last4: '4242',
+        created_at: '2021-05-05T17:19:38.777Z',
+        games: [
+          {
+            id: '1',
+            name: 'game',
+            developers: [
+              {
+                name: 'developer',
+              },
+            ],
+            slug: 'game',
+            cover: {
+              url: '/image.jpg',
+            },
+            price: 10,
+          },
+        ],
+      },
+    ] as QueryOrders_orders[]
+
+    expect(ordersMapper(orders)).toStrictEqual([
+      {
+        id: '1',
+        paymentInfo: {
+          flag: 'visa',
+          img: '/img/cards/visa.png',
+          number: '**** **** **** 4242',
+          purchaseDate: 'Purchase made on May 5, 2021',
+        },
+        games: [
+          {
+            id: '1',
+            title: 'game',
+            downloadLink: 'https://wongames.com/game/download/xpto',
+            img: '/image.jpg',
+            price: '$10.00',
+          },
+        ],
+      },
+    ])
+  })
+
+  it('should return free game when its free', () => {
+    const orders = [
+      {
+        __typename: 'Order',
+        id: '1',
+        card_brand: null,
+        card_last4: null,
+        created_at: '2021-05-05T17:19:38.777Z',
+        games: [
+          {
+            id: '1',
+            name: 'game',
+            developers: [
+              {
+                name: 'developer',
+              },
+            ],
+            slug: 'game',
+            cover: {
+              url: '/image.jpg',
+            },
+            price: 0,
+          },
+        ],
+      },
+    ] as QueryOrders_orders[]
+
+    expect(ordersMapper(orders)).toStrictEqual([
+      {
+        id: '1',
+        paymentInfo: {
+          flag: null,
+          img: null,
+          number: 'Free Game',
+          purchaseDate: 'Purchase made on May 5, 2021',
+        },
+        games: [
+          {
+            id: '1',
+            title: 'game',
+            downloadLink: 'https://wongames.com/game/download/xpto',
+            img: '/image.jpg',
+            price: '$0.00',
+          },
+        ],
       },
     ])
   })
