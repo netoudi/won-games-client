@@ -19,6 +19,9 @@ export default function Me(props: FormProfileProps) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await protectedRoutes(context)
+
+  if (!session) return { props: {} }
+
   const apolloClient = initializeApollo(null, session)
 
   const { data } = await apolloClient.query<
