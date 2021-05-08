@@ -7,4 +7,11 @@ module.exports = withPWA({
     dest: 'public',
     disable: !isProd,
   },
+  images: {
+    domains: [
+      'localhost',
+      'res.cloudinary.com',
+      'aws-wongames.s3.us-west-2.amazonaws.com',
+    ],
+  },
 })
