@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { Session } from 'next-auth/client'
+import { Session } from 'next-auth'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { PaymentIntent, StripeCardElementChangeEvent } from '@stripe/stripe-js'
 import { ErrorOutline, ShoppingCart } from '@styled-icons/material-outlined'
@@ -41,7 +41,10 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
       if (items.length) {
         // bater na API /orders/create-payment-intent
         // enviar os items do carrinho
-        const data = await createPaymentIntent({ items, token: session.jwt })
+        const data = await createPaymentIntent({
+          items,
+          token: session.jwt as string,
+        })
 
         // se eu receber freeGames: true => setFreeGames
         // faço o fluxo de jogo gratuito
@@ -70,7 +73,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
     const data = await createPayment({
       items,
       paymentIntent,
-      token: session.jwt,
+      token: session.jwt as string,
     })
 
     return data

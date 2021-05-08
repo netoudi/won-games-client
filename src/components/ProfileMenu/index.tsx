@@ -18,8 +18,6 @@ const ProfileMenu = ({ activeLink }: ProfileMenuProps) => {
 
   const handleSignOut = async () => {
     const data = await signOut({ redirect: false, callbackUrl: '/' })
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     await router.push(data.url)
   }
 

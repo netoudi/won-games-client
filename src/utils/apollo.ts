@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 import { ApolloClient, HttpLink, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import apolloCache from 'utils/apolloCache'
-import { GenericObject, SessionBase } from 'next-auth/_utils'
+import { Session } from 'next-auth'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
-function createApolloClient(session?: (SessionBase & GenericObject) | null) {
+function createApolloClient(session?: Session | null) {
   const httpLink = new HttpLink({
     uri: `${process.env.NEXT_PUBLIC_API_URL}/graphql`,
   })
@@ -26,7 +26,7 @@ function createApolloClient(session?: (SessionBase & GenericObject) | null) {
 
 export function initializeApollo(
   initialState = null,
-  session?: (SessionBase & GenericObject) | null,
+  session?: Session | null,
 ) {
   // serve para verificar se já existe uma instância, para não criar outra
   const apolloClientGlobal = apolloClient ?? createApolloClient(session)
@@ -46,10 +46,7 @@ export function initializeApollo(
   return apolloClient
 }
 
-export function useApollo(
-  initialState = null,
-  session?: (SessionBase & GenericObject) | null,
-) {
+export function useApollo(initialState = null, session?: Session | null) {
   const store = useMemo(() => initializeApollo(initialState, session), [
     initialState,
     session,
