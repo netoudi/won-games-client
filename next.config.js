@@ -14,4 +14,7 @@ module.exports = withPWA({
       'aws-wongames.s3.us-west-2.amazonaws.com',
     ],
   },
+  future: {
+    webpack5: true,
+  },
 })
