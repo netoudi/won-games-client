@@ -85,6 +85,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     revalidate: 60, // gera novamente a página a cada 60's, evita consultar a api a cada requisição
     props: {
+      slug: params?.slug,
       cover: getImageUrl(game.cover?.src),
       gameInfo: {
         id: game.id,
