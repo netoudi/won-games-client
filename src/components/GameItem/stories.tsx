@@ -22,7 +22,7 @@ WithPayment.args = {
   downloadLink: 'https://wongames.com/game/download/asdf',
   paymentInfo: {
     flag: 'mastercard',
-    img: '/img/master-card.png',
+    img: '/img/cards/mastercard.png',
     number: '**** **** **** 4326',
     purchaseDate: 'Purchase made on 07/20/2020 at 20:32',
   },

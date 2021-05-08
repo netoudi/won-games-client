@@ -3,7 +3,7 @@ export default [
     id: '1',
     paymentInfo: {
       flag: 'mastercard',
-      img: '/img/master-card.png',
+      img: '/img/cards/mastercard.png',
       number: '*** *** **** 4326',
       purchaseDate: 'Purchase made on 07/20/2020 at 20:32',
     },
@@ -22,7 +22,7 @@ export default [
     id: '2',
     paymentInfo: {
       flag: 'visa',
-      img: '/img/visa.png',
+      img: '/img/cards/visa.png',
       number: '*** *** **** 5423',
       purchaseDate: 'Purchase made on 08/20/2020 at 21:12',
     },
